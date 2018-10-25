@@ -1,8 +1,14 @@
 const app = require("./app");
 
 const port = 8080;
+const server = require('http').Server(app);
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log('Starting server on port ' + port);
 });
+
+
+
+
+
 
