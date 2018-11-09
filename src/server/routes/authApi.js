@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 
 const Users = require('../db/users');
-//const Tokens = require('../ws/tokens');
+const Tokens = require('../webSocket/token');
 
 const router = express.Router();
 

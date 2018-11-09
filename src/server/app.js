@@ -8,6 +8,7 @@ const path = require('path');
 
 const Users = require('./db/users');
 const authApi = require('./routes/authApi');
+const quizApi = require('./routes/quizApi');
 
 
 const app = express();
@@ -68,6 +69,7 @@ app.use(passport.session());
 
 //--- Routes -----------
 app.use('/api', authApi);
+app.use('/api', quizApi);
 
 
 //handling 404

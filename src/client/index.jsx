@@ -6,6 +6,7 @@ import {Home} from "./home";
 import Header from "./header"
 import Login from "./login";
 import SignUp from "./signup";
+import {QuizGame} from "./quiz/quizgame";
 
 
 class App extends React.Component{
@@ -70,9 +71,9 @@ class App extends React.Component{
                 <h2>NOT FOUND</h2>
                 <p>ERROR: </p>
             </div>
-        )
+        );
 
-    }
+    };
 
     updateLoggedIn(userId) {
         this.setState({userId: userId})
@@ -93,6 +94,9 @@ class App extends React.Component{
                                render={props => <SignUp {...props}
                                                         userId={this.state.userId}
                                                         updateLoggedIn={this.updateLoggedIn}/>}/>
+                        <Route exact path="/quizgame"
+                               render={props => <QuizGame {...props} userId={this.state.userId}
+                                                             updateLoggedIn={this.updateLoggedIm}/>}/>
 
                         <Route component={this.notFoundMsg}/>
                     </Switch>
