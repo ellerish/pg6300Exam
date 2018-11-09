@@ -95,8 +95,9 @@ class App extends React.Component{
                                                         userId={this.state.userId}
                                                         updateLoggedIn={this.updateLoggedIn}/>}/>
                         <Route exact path="/quizgame"
-                               render={props => <QuizGame {...props} userId={this.state.userId}
-                                                             updateLoggedIn={this.updateLoggedIm}/>}/>
+                               render={props => <QuizGame {...props}
+                                                          userId={this.state.userId}
+                                                          updateLoggedIn={this.updateLoggedIn}/>}/>
 
                         <Route component={this.notFoundMsg}/>
                     </Switch>

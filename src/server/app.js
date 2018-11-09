@@ -12,8 +12,6 @@ const quizApi = require('./routes/quizApi');
 
 
 const app = express();
-//const server = require('http').Server(app);
-//const io = socketIo(server);
 
 //to handle JSON payloads
 app.use(bodyParser.json());

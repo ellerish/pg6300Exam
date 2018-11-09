@@ -78,4 +78,4 @@ function displayNewQuiz() {
 };
 
 
-module.exports = {displayNewQuiz};
+module.exports = {displayNewQuiz, quizzes};

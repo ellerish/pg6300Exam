@@ -3,32 +3,26 @@ const {displayNewQuiz} = require('./quizData');
 
 class QuizState {
 
-    constructor(dto){
-        if(dto === undefined || dto === null){
-            this.resetGame();
+    constructor(dto) {
+        if (dto === undefined || dto === null) {
+            resetGame();
         } else {
-          // this.currentQuizIndex= dto.currentQuizIndex;
-           //  this.quiz = displayNewQuiz(dto);
-           // this.counter = dto.counter;
-          //  this.points = getPoints();
+            // this.currentQuizIndex= dto.currentQuizIndex;
+            //  this.quiz = displayNewQuiz(dto);
+            // this.counter = dto.counter;
+            //  this.points = getPoints();
             //this.result = dto.result;
+
         }
     }
 
-    resetGame(){
+    resetGame() {
         this.quiz = displayNewQuiz();
 
     }
 
 
-
-
-
-
-
 }
-
-
 
 
 module.exports = QuizState;
