@@ -1,6 +1,6 @@
 const quizzes = [
     {
-        question: "What kind of language is JavaScript?",
+        question: "What is my ?",
         answer_0: "Strongly and statically typed",
         answer_1: "Strongly and dynamically typed",
         answer_2: "Weakly and statically typed",
@@ -8,7 +8,7 @@ const quizzes = [
         indexOfRightAnswer: 3
     },
     {
-        question: "In JavaScript, what is the result of the following?\n\n+(!![]+!![]+!![]+!![]+[]+(!![]+!![]))",
+        question: "In JavaScript, what is the result of the following?\n\n+",
         answer_0: "Compilation exception",
         answer_1: "Runtime exception",
         answer_2: "42",
@@ -40,7 +40,7 @@ answerTag = function (prefix, answer, correct) {
     let onclick;
 
     if(correct) {
-        onclick = "alert('Correct!!!');  displayNewQuiz();";
+        onclick = "alert('Correct!!!');";  displayNewQuiz();
     } else {
         onclick = "alert('Wrong answer');";
     }

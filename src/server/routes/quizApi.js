@@ -1,5 +1,7 @@
 const express = require('express');
 const PlayerQueue = require('../quiz/playerQueue');
+const ActivePlayers = require('../quiz/activePlayer');
+const OngoingMatches = require('../quiz/ongoing_matches');
 
 
 const router = express.Router();
@@ -27,6 +29,7 @@ router.post('/quizgame', (req, res) => {
         another one, such previous match must be forfeited.
         Otherwise, a user might cheat by just starting a new match
         when it sees it is losing the current one.
+        */
 
     OngoingMatches.forfeit(req.user.id);
 
@@ -35,7 +38,7 @@ router.post('/quizgame', (req, res) => {
         /*
             Get a user from the queue of waiting players
          */
-   /*     const opponent = PlayerQueue.takeUser();
+      const opponent = PlayerQueue.takeUser();
         if (!ActivePlayers.isActive(opponent)) {
             //this can happen if a user has disconnected
             continue;
@@ -48,13 +51,9 @@ router.post('/quizgame', (req, res) => {
     }
 
 
-    /*
-        This could happen if there is no user in the queue.
-        The current user has to wait for when an opponent shows up.
-
     PlayerQueue.addUser(req.user.id);
     res.status(201).send();
-     */
+
 });
 
 

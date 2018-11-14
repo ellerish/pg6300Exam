@@ -1,31 +1,33 @@
 import React from "react";
-import QuizState from "../../server/quiz/quizState";
+
 
 export class QuizBoard extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = this.getDefaultState();
+        this.state = {
 
-       // this.selectCell = this.selectCell.bind(this);
-        this.resetBoard = this.resetBoard.bind(this);
+        };
+
+        this.selectAnswer = this.selectAnswer.bind(this);
+     //   this.resetBoard = this.resetBoard.bind(this);
         //this.handleOpponent = this.handleOpponent.bind(this);
     }
 
-    getDefaultState() {
+  /*  getDefaultState() {
 
         //choose at random whether starting or not. X starts first.
        // const isX = Math.random() >= 0.5;
 
         return {
-            board: new QuizState(),
+          //  board: new QuizState(),
          /*   posToInsert: null,
             isX: isX,
            // needHandleOpponent: ! isX,
             lastInsertedColumn: null
             */
-        };
+  /*      };
     }
 
 
@@ -41,10 +43,23 @@ export class QuizBoard extends React.Component {
         this.setState({board: board})
     }
 
-    playerIsNext() {
+    */
 
+
+  /*  selectAnswer(prefix, answer, correct) {
+
+        let onclick;
+
+        if(correct) {
+            onclick = "alert('Correct!!!');  displayNewQuiz();";
+        } else {
+            onclick = "alert('Wrong answer');";
+        }
+
+        let html = "<div class='gameBtn' onclick=\""+onclick+"\">" + prefix + answer + "</div>";
+
+        return html;
     }
-
 
 
     /*
@@ -115,19 +130,23 @@ export class QuizBoard extends React.Component {
 
     //    const msg = this.getInfoMessage(this.state.board.result);
 
-        const handler = this.props.newMatchHandler ? this.props.newMatchHandler : this.resetBoard;
+      /*  const handler = this.props.newQuizMatchHandler ? this.props.newQuizMatchHandler : this.resetBoard;
 
         return (
             <div>
-               /* <h2>{this.props.title}</h2>
+                 <h2>{this.props.title}</h2>
                    /* <div className="btn" onClick={handler}>New Match</div>@/
 
-                    */
+
+       /*
                    <div>
                        <div className="btn" onClick={handler}>New Match</div>
                    </div>
             </div>
         );
+
+
+        */
     }
 
 

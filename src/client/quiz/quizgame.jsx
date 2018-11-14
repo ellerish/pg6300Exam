@@ -1,8 +1,10 @@
 import React from "react";
 import openSocket from 'socket.io-client';
-import {QuizBoard} from "./quizBoard";
+//import {QuizBoard} from "./quizBoard";
+import {Opponent} from "./opponent";
 
 import {quizzes} from "../../server/quiz/quizData";
+//import QuizState from "../../server/quiz/quizState";
 
 
 export class QuizGame extends React.Component {
@@ -12,21 +14,23 @@ export class QuizGame extends React.Component {
         super(props);
 
         this.state = {
-         //   matchId: null,
-           // opponentId: null,
+            matchId: null,
+            opponentId: null,
             errorMsg: null,
-            currentQuizIndex: 0
+            currentQuizIndex: 0,
+            points: 0
         };
 
-      //  this.startNewQuiz = this.startNewQuiz.bind(this);
-       // this.refToQuizBoard = React.createRef();
-        //this.opponent = new OpponentOnline();
+
+        this.refToQuizBoard = React.createRef();
+        this.opponent = new Opponent();
 
         this.startNewQuiz = this.startNewQuiz.bind(this);
 
     }
 
-    componentDidMount(){
+
+    componentDidMount() {
 
         const userId = this.props.userId;
         if (userId === null) {
@@ -34,17 +38,67 @@ export class QuizGame extends React.Component {
             return;
         }
 
-        const currentQuizIndex = 0;
+        this.socket = openSocket(window.location.origin);
+        this.socket.on("update",  (dto) => {
 
-      //  const boardQuiz = this.refToQuizBoard.current;
-       // boardQuiz.currentQuizIndex
+            if (dto === null || dto === undefined) {
+                this.setState({errorMsg: "Invalid response from server."});
+                return;
+            }
+
+            if (dto.error !== null && dto.error !== undefined) {
+                this.setState({errorMsg: dto.error});
+                return;
+            }
+
+            const data = dto.data;
+
+            this.setState({
+                matchId: data.matchId,
+                opponentId: data.opponentId
+            });
+
+            this.opponent.setMatchId(data.matchId);
+
+            /*
+                After the opponent has done its move, or this is the
+                first one, we update the state of the board.
+                The state of the board in the client (ie the Browser) is
+                only used to display (eg building the HTML).
+                The actual state that matters is the one on the server.
+                Each time a client does an action, the server must verify that
+                the action is valid, and a user is not trying to cheat.
+
+            const boardCmp = this.refToQuizBoard.current;
+            boardCmp.setBoardState(new QuizState(data.boardDto));
+             */
+        });
+
+        this.socket.on('disconnect', () => {
+            this.setState({errorMsg: "Disconnected from Server."});
+        });
+
+
+        this.opponent.setSocket(this.socket);
+
+        /*
+            Once a WebSocket is established, we need to authenticate it.
+            Once authenticated, we can ask the server to start a new match.
+         */
+        this.doLogInWebSocket(userId).then(
+            this.startNewQuiz
+        );
+    }
+
+    componentWillUnmount() {
+        this.socket.disconnect();
     }
 
     answerTag(prefix, answer, correct) {
         let onclick;
 
         if (correct) {
-            onclick = () => {alert('Correct!!!'); this.displayNewQuiz()}
+            onclick = () => {alert('Correct!!!'); this.displayNewQuiz() }
         } else {
             onclick = () => {alert('Wrong answer');};
         }
@@ -71,20 +125,21 @@ export class QuizGame extends React.Component {
      async startNewQuiz() {
 
 
-         let index = Math.floor(Math.random() * quizzes.length);
+        let index = Math.floor(Math.random() * quizzes.length);
 
          if (index === this.state.currentQuizIndex) {
              index = (index + 1) % quizzes.length;
          }
 
+
         this.setState({
-          //   matchId: null,
-          //  opponentId: null,
+            matchId: null,
+            opponentId: null,
             errorMsg: null,
-            currentQuizIndex: index
+           // currentQuizIndex: index
         });
 
-        const url = "/quizgame";
+        const url = "/api/quizgame";
 
         let response;
 
@@ -114,25 +169,68 @@ export class QuizGame extends React.Component {
     };
 
 
+    async doLogInWebSocket(userId) {
+
+        /*
+            WebSockets do not have direct support for authentication.
+            So, here we first do an authenticated AJAX call to get a unique
+            token associated with the current logged in user via the session
+            cookie. Then, we emit such tokens on the WS connection to tell the
+            server that such connection is coming from the logged in user, and
+            not someone else.
+            Note: this works because there is going to be a different WS socket
+            on the server for each user.
+         */
+
+        const url = "/api/wstoken";
+
+        let response;
+
+        try {
+            response = await fetch(url, {
+                method: "post"
+            });
+        } catch (err) {
+            this.setState({errorMsg: "Failed to connect to server: " + err});
+            return;
+        }
+
+
+        if (response.status === 401) {
+            //this could happen if the session has expired
+            this.setState({errorMsg: "You should log in first"});
+            this.props.updateLoggedIn(null);
+            return;
+        }
+
+        if (response.status !== 201) {
+            this.setState({errorMsg: "Error when connecting to server: status code " + response.status});
+            return;
+        }
+
+        const payload = await response.json();
+
+        this.socket.emit('login', payload);
+    };
+
 
     render() {
-
 
 
         if (this.state.errorMsg !== null) {
             return <div><p>[FAILURE] {this.state.errorMsg}</p></div>
         }
 
-      /*  if (this.state.matchId === null) {
+       if (this.state.matchId === null) {
 
             return <div><h3>Searching for a worthy opponent</h3></div>
         }
 
-*/
         const quiz = quizzes[this.state.currentQuizIndex];
         return (
 
             <div>
+                <h2>{"Match against " + this.state.opponentId} </h2>
                 <div>
                 <h2 className={"quizQuestion"}>
                     Question: {quiz.question}
@@ -147,6 +245,8 @@ export class QuizGame extends React.Component {
                 </div>
 
             </div>
+
+
         );
     }
 
