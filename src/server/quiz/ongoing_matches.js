@@ -1,6 +1,5 @@
 const Match = require('./match');
 
-
 /*
     Map from user id to ongoing match
  */

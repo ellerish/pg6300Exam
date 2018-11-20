@@ -90,8 +90,6 @@ export class QuizGame extends React.Component {
             errorMsg: null
         });
 
-
-
         const url = "/api/quizgame";
 
         let response;
@@ -165,7 +163,7 @@ export class QuizGame extends React.Component {
 
         if (this.state.matchId === null) {
 
-            return <div><h3>Searching for a worthy opponent</h3></div>
+            return <div><h3>Searching for a opponent, be ready</h3></div>
         }
 
         return (

@@ -5,6 +5,10 @@ const OngoingMatches = require('../quiz/ongoing_matches');
 
 let socketio;
 
+/*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
+ */
+
 const start = (server) => {
     socketIo(server);
 

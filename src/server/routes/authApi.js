@@ -1,10 +1,12 @@
 const express = require('express');
 const passport = require('passport');
-
 const Users = require('../db/users');
 const Tokens = require('../webSocket/token');
-
 const router = express.Router();
+
+/*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
+ */
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
 

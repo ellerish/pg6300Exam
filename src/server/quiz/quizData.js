@@ -1,26 +1,26 @@
 const quizzes = [
     {
         question: "What is the most painful ?",
-        answer_0: "Hurting your knee",
+        answer_0: "A cold winter",
         answer_1: "Have your heart broken",
-        answer_2: "get an F on this exam",
+        answer_2: "Javascript",
         answer_3: "Sit on a cactus",
-        indexOfRightAnswer: 3
+        indexOfRightAnswer: 2
     },
     {
-        question: "Why is it fun to code?",
-        answer_0: "Because else i cant communicate",
-        answer_1: "It's the cure and the cause to life",
-        answer_2: "42",
-        answer_3: "redBuLLL",
+        question: "Is JavaScript and Java the same?",
+        answer_0: "They do the same",
+        answer_1: "Maybe",
+        answer_2: "No!",
+        answer_3: "Yes",
         indexOfRightAnswer: 2
     },
     {
         question: "What is a thought? ",
-        answer_0: "old you",
-        answer_1: "new you",
-        answer_2: "another you",
-        answer_3: "electric signal a human can compile",
+        answer_0: "Old you",
+        answer_1: "New you",
+        answer_2: "Another you",
+        answer_3: "Electric signal a human can compile",
         indexOfRightAnswer: 3
     }
     ,
@@ -29,7 +29,7 @@ const quizzes = [
         answer_0: "false",
         answer_1: "true",
         answer_2: "denoting 3,14",
-        answer_3: "Instrument to program music",
+        answer_3: "Program to live code music",
         indexOfRightAnswer: 3
     },
     {
@@ -65,20 +65,20 @@ const quizzes = [
         indexOfRightAnswer: 1
     },
     {
-        question: "What is SonicPi ? ",
-        answer_0: "false",
-        answer_1: "true",
-        answer_2: "denoting 3,14",
-        answer_3: "Instrument to program music",
-        indexOfRightAnswer: 3
+        question: "What is NPM? ",
+        answer_0: "Node Pi Module",
+        answer_1: "No Problem Man",
+        answer_2: "Node Package Manager",
+        answer_3: "Time Plugin",
+        indexOfRightAnswer: 2
     },
     {
-        question: "What is SonicPi ? ",
-        answer_0: "false",
-        answer_1: "true",
-        answer_2: "denoting 3,14",
-        answer_3: "Instrument to program music",
-        indexOfRightAnswer: 3
+        question: "Wat sís DS3231 ? ",
+        answer_0: "RTC",
+        answer_1: "Particle Photon",
+        answer_2: "A music instrument",
+        answer_3: "Chinese food",
+        indexOfRightAnswer: 0
     }
 ];
 

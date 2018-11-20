@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 /*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
     Home Page render info based on if a user is logged in or not.
  */
 

@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 
 /*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
     Map from random tokens to userId
  */
 const tokens = new Map();

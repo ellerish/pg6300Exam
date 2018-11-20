@@ -39,22 +39,23 @@ class QuizState{
         return this.result !== 0;
     }
 
-
     itsATie(){
-        this.result = 2;
+        this.result = 3;
     }
 
-
-  
     selectCorrectAnswer(){
         this.points++;
 
         if(this.points === 10){
             this.result = 1;
-
         }
+
     }
 
+    /*
+    boardStatus(res){
+        this.result = 2;
+    }*/
 
 
 }

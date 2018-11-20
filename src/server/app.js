@@ -4,14 +4,14 @@ const passport = require('passport');
 const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
-
-
 const Users = require('./db/users');
 const authApi = require('./routes/authApi');
 const quizApi = require('./routes/quizApi');
-
-
 const app = express();
+
+/*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
+ */
 
 //to handle JSON payloads
 app.use(bodyParser.json());

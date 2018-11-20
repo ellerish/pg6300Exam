@@ -4,6 +4,7 @@ import {Link, withRouter} from 'react-router-dom';
 /*
     Header component for all pages, where we have a link to the
     home-page, and login/sing-up/logout buttons.
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
  */
 
 class Header extends React.Component {

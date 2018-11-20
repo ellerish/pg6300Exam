@@ -2,11 +2,11 @@ const express = require('express');
 const PlayerQueue = require('../quiz/playerQueue');
 const ActivePlayers = require('../quiz/activePlayer');
 const OngoingMatches = require('../quiz/ongoing_matches');
-
-
 const router = express.Router();
 
 /*
+/*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
     Create a new match.
     Only logged in users can play online.
  */

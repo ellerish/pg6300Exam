@@ -1,4 +1,8 @@
 /*
+
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
+
+
     Simulating database as seen in class PG6300 with in-memory map.
 */
 

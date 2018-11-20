@@ -34,7 +34,8 @@ export class QuizBoard extends React.Component {
         this.setState({board: board})
     }
 
-    /*componentDidUpdate(prevProps, prevState) {
+
+    /*componentDidUpdate() {
         const board = this.state.board;
         if(board.result !==0){
             this.handleResultChange();
@@ -47,8 +48,8 @@ export class QuizBoard extends React.Component {
         if(board.result !==0){
         }
 
-    }
-    */
+    }*/
+
 
 
     answerTag(prefix, answer, correct) {
@@ -89,10 +90,9 @@ export class QuizBoard extends React.Component {
         });
     }
 
+
     handleResultChange () {
-        if(this.state.board.result === 1) {
-            this.state.opponent.setMatchResult(2, this)
-        }
+           // this.state.opponent.setMatchResult()
     }
 
 
@@ -111,7 +111,7 @@ export class QuizBoard extends React.Component {
             msg = "You Got 10 points before your opponent!"
         } else if(lost){
             msg = "LOOOOST"
-        }else if (res === 4) {
+        } else if(res === 4) {
             msg = "The opponent has forfeited. You won the game!"
         } else {
             throw "Invalid result code: " + res;
@@ -157,7 +157,7 @@ export class QuizBoard extends React.Component {
                         Points: {points}
                     </h2>
 
-                    <h2>OnGoingGame</h2>
+                    <h2>On Going Quiz</h2>
                 </div>
             </div>
         );

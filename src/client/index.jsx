@@ -11,6 +11,8 @@ import {QuizGame} from "./quiz/quizgame";
 
 /*
     Index render info based on if a user is logged in or not.
+
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
  */
 
 class App extends React.Component{

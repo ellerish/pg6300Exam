@@ -4,11 +4,8 @@ const ActivePlayers = require('./activePlayer');
 const QuizState = require('./quizState');
 
 /*
-    Class used to represent a Match between two players.
-    Every time a player does a move, we need to inform the opponent.
-    This is done via WebSockets.
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
 
-    Each match will have an id selected at random.
  */
 class Match{
 
@@ -31,7 +28,7 @@ class Match{
         this.sockets.set(secondPlayerId, ActivePlayers.getSocket(secondPlayerId));
 
         //who is starting is selected at random
-      //  this.xId = this.playerIds[Math.floor(Math.random() * 2)];
+
 
         //instruct what to do once a match is finished
          this.callbackWhenFinished = callbackWhenFinished;
@@ -69,6 +66,7 @@ class Match{
             }
 
             const matchId = data.matchId;
+            const result = data.result;
 
 
             if(matchId !== this.matchId){
@@ -76,15 +74,17 @@ class Match{
                 return;
             }
 
+
+            //this.board.boardStatus(result);
+
             //send such state to the opponent
             this.sendState(this.opponentId(userId));
+            //console.log("test");
 
 
             if(this.board.isGameFinished()){
                 this.callbackWhenFinished(this.matchId);
             }
-
-
 
         });
 

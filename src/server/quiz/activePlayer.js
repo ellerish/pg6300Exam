@@ -1,5 +1,8 @@
-const socketToUser = new Map();
+/*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
+ */
 
+const socketToUser = new Map();
 const userToSocket = new Map();
 
 

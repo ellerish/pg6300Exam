@@ -8,8 +8,6 @@ export  class Opponent{
         this.matchId = matchId;
     }
 
-
-
     setMatchResult(resultStatus, boardCmp){
         const boardState = boardCmp.getBoardState();
 

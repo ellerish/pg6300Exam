@@ -1,6 +1,10 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
+/*
+    Code from the PG6300 course on *Web Development and API Design* /Andrea Arcuri
+    LogIn
+ */
 
 class Login extends React.Component{
 
