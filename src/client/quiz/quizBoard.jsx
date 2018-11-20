@@ -12,8 +12,7 @@ export class QuizBoard extends React.Component {
 
         this.resetBoard = this.resetBoard.bind(this);
         this.answerTag = this.answerTag.bind(this);
-        this.handleOpponent = this.handleOpponent.bind(this);
-
+        this.handleResultChange = this.handleResultChange.bind(this);
     }
 
     getDefaultState() {
@@ -35,15 +34,21 @@ export class QuizBoard extends React.Component {
         this.setState({board: board})
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        this.handleOpponent();
-
+    /*componentDidUpdate(prevProps, prevState) {
+        const board = this.state.board;
+        if(board.result !==0){
+            this.handleResultChange();
+        }
     }
+
 
     componentDidMount() {
-        this.handleOpponent();
+        const board = this.state.board;
+        if(board.result !==0){
+        }
 
     }
+    */
 
 
     answerTag(prefix, answer, correct) {
@@ -68,17 +73,6 @@ export class QuizBoard extends React.Component {
         );
     }
 
-    //If player.
-    wrongAnswer() {
-
-        let compoints = this.state.points - 1;
-
-        this.setState({
-            points: compoints
-        });
-
-    }
-
 
     displayNewQuiz() {
         let compoints = this.state.board.selectCorrectAnswer();
@@ -93,29 +87,22 @@ export class QuizBoard extends React.Component {
         this.setState({
             currentQuizIndex: index, points: compoints
         });
-
-
     }
 
-    handleOpponent() {
-        if(this.state.board.points === 10){
-        this.props.opponent.answerCorrect(this.state.points, this);
-    }}
+    handleResultChange () {
+        if(this.state.board.result === 1) {
+            this.state.opponent.setMatchResult(2, this)
+        }
+    }
 
 
     getInfoMessage(res) {
 
         const board = this.state.board;
-        //   const won =  board.points;
-        //const won =  board.result === 1;
 
         const won = board.result === 1;
-        const lost = board.result === 2;
-       // this.props.opponent.answerCorrect(this.state.points, lost);
 
-        // const won = this.state.isX ?
-        // const lost = board.result === 2;
-        //  const lost = board.result === 2;
+        const lost = board.result === 2;
 
         let msg;
         if (res === 0) {
@@ -123,11 +110,8 @@ export class QuizBoard extends React.Component {
         } else if (won) {
             msg = "You Got 10 points before your opponent!"
         } else if(lost){
-            msg = "LOst!"
-        }
-        else if (res === 3) {
-            msg = "The Game Ended in a Tie!"
-        } else if (res === 4) {
+            msg = "LOOOOST"
+        }else if (res === 4) {
             msg = "The opponent has forfeited. You won the game!"
         } else {
             throw "Invalid result code: " + res;
@@ -175,16 +159,12 @@ export class QuizBoard extends React.Component {
 
                     <h2>OnGoingGame</h2>
                 </div>
-
-
             </div>
         );
     }
 
 
     render() {
-        //const handler = this.props.newMatchHandler ? this.props.newMatchHandler : this.resetBoard;
-
         const board = this.state.board;
         let content;
         const on =  board.result;
@@ -193,15 +173,9 @@ export class QuizBoard extends React.Component {
         } else {
             content = this.renderGameFinish()
         }
-
-
-
-        //  const quiz = quizzes[this.state.currentQuizIndex];
-        //  const points = [this.state.points];
         return (
             <div>
                 {content}
-
             </div>
 
         );

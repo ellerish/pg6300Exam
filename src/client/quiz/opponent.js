@@ -9,15 +9,15 @@ export  class Opponent{
     }
 
 
-    answerCorrect(pointStatus, boardCmp) {
 
-
-       const boardState = boardCmp.getBoardState();
+    setMatchResult(resultStatus, boardCmp){
+        const boardState = boardCmp.getBoardState();
 
         this.socket.emit('insertion', {
-            pointStatus: boardState.points,
+            resultStatus: boardState.result,
             matchId: this.matchId
         });
     }
+
 
 }
