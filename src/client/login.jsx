@@ -66,9 +66,8 @@ class Login extends React.Component{
 
     render(){
 
-        let error = <div></div>;
+        let error;
         if(this.state.errorMsg !== null){
-            //TODO css
             error = <div className="errorMsg"><p>{this.state.errorMsg}</p></div>
         }
 

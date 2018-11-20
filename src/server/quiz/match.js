@@ -1,7 +1,7 @@
-const crypto = require("crypto");
 
-//const BoardState = require('./quizState');
+const crypto = require("crypto");
 const ActivePlayers = require('./activePlayer');
+const QuizState = require('./quizState');
 
 /*
     Class used to represent a Match between two players.
@@ -14,11 +14,12 @@ class Match{
 
     constructor(firstPlayerId, secondPlayerId, callbackWhenFinished){
 
-     //   this.board = new BoardState();
+         this.board = new QuizState();
 
         this.playerIds = [firstPlayerId, secondPlayerId];
 
         this.matchId = this.randomId();
+
 
         /*
             Given two users playing this match, we need to get the WS sockets
@@ -33,7 +34,7 @@ class Match{
       //  this.xId = this.playerIds[Math.floor(Math.random() * 2)];
 
         //instruct what to do once a match is finished
-        this.callbackWhenFinished = callbackWhenFinished;
+         this.callbackWhenFinished = callbackWhenFinished;
     }
 
 
@@ -67,43 +68,27 @@ class Match{
                 return;
             }
 
-            const counter = data.counter;
-            const position = data.position;
             const matchId = data.matchId;
 
-            console.log("Handling message from '" + userId+"' for counter " + counter
-                + " in match " + this.matchId);
-
-            const expectedCounter = this.board.counter + 1;
-
-            /*
-                We start with some input validation, eg checking if the received
-                message was really meant for this ongoing match.
-             */
-
-            if(counter !== expectedCounter){
-                socket.emit("update", {error: "Invalid operation"});
-                console.log("Invalid counter: "+counter+" !== " + expectedCounter);
-                return;
-            }
 
             if(matchId !== this.matchId){
                 console.log("Invalid matchId: "+matchId+" !== " + this.matchId);
                 return;
             }
 
-
-         /*   //update the state of the game
-            this.board.selectColumn(position);
-
             //send such state to the opponent
             this.sendState(this.opponentId(userId));
+
 
             if(this.board.isGameFinished()){
                 this.callbackWhenFinished(this.matchId);
             }
-            */
+
+
+
         });
+
+
     }
 
     opponentId(userId){
@@ -120,8 +105,8 @@ class Match{
         const payload = {
             data: {
                 matchId: this.matchId,
-              //  boardDto: this.board.extractDto(),
-                opponentId: this.opponentId(userId)
+                boardDto: this.board.extractDto(),
+                opponentId: this.opponentId(userId),
             }
         };
 
@@ -132,9 +117,11 @@ class Match{
 
     sendForfeit(userId){
 
-     //   this.board.doForfeit();
+        this.board.doForfeit();
         this.sendState(this.opponentId(userId));
     }
+
+
 }
 
 

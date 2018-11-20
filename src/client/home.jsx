@@ -1,7 +1,9 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 
-
+/*
+    Home Page render info based on if a user is logged in or not.
+ */
 
 export class Home extends React.Component {
 
@@ -20,14 +22,32 @@ export class Home extends React.Component {
                </div>
 
                <div className="btnPart">
+
                    {loggedIn ? (
-                       <Link to={"/quizgame"} className={"btn"}>
-                           Online Match
-                       </Link>
+
+                       <div className="gameInfo">
+                           <h3>This Quiz will start as soon as another participant is connected,
+                               This is a infinity match,
+                               The first one to get 10 points will get notified, and wait for the other participant
+                               to get 10 points, and then its a new round on questions.
+                               The game continues till one of you forfeit.
+                               Good Luck
+                           </h3>
+
+                           <Link to={"/quizgame"} className={"btn"}>
+                               Online Game
+                           </Link>
+                       </div>
+
                    ) : (
-                       <div className="btnDeActive"></div>
+
+                       <div className="notLoggedInWelcome">
+                           <p></p>
+                       </div>
                    )}
                </div>
+
+
            </div>
 
         );

@@ -1,8 +1,6 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
-
-
 /*
     Header component for all pages, where we have a link to the
     home-page, and login/sing-up/logout buttons.
@@ -50,7 +48,7 @@ class Header extends React.Component {
     renderNotLoggedIn() {
         return (
             <div>
-                <p className="notLoggedInWelcome">Log in to start Quiz</p>
+                <p className="notLoggedInWelcome">You have to Login/Or Sign Up to play this quiz</p>
 
                 <Link to="/login">Log In</Link>
                 <Link to="/signup">Sign Up</Link>

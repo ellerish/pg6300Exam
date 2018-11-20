@@ -9,17 +9,13 @@ import SignUp from "./signup";
 import {QuizGame} from "./quiz/quizgame";
 
 
+/*
+    Index render info based on if a user is logged in or not.
+ */
+
 class App extends React.Component{
     constructor(props){
-        // call the React.Component constructor (the super class, the one you are extending)
         super(props);
-
-        /*
-           As whether we are logged in or not will impact the rendering of
-           all pages, such state info as to be stored here in the root component.
-           If a user is logged in, then we stored its userId here.
-           A null value means the user is not logged in.
-        */
 
         this.state = {
             userId: null
@@ -29,9 +25,7 @@ class App extends React.Component{
 
     }
     componentDidMount(){
-        // you can now change the state. You can do so in lifecycle methods, in event handler methods, etc...
         this.checkIfUserAlreadyLoggedIn();
-
     }
 
 
@@ -56,7 +50,6 @@ class App extends React.Component{
         }
 
         if (response.status !== 200) {
-            //TODO here could have some warning message in the page.
         } else {
             const payload = await response.json();
             this.updateLoggedIn(payload.userId);
@@ -67,12 +60,9 @@ class App extends React.Component{
     notFoundMsg(){
         return(
             <div>
-                <h3>404</h3>
-                <h2>NOT FOUND</h2>
-                <p>ERROR: </p>
+                <h2>404: NOT FOUND</h2>
             </div>
         );
-
     };
 
     updateLoggedIn(userId) {

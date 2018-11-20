@@ -1,4 +1,6 @@
 import React from "react";
+import QuizState from "../../server/quiz/quizState";
+import {quizzes} from "../../server/quiz/quizData";
 
 
 export class QuizBoard extends React.Component {
@@ -6,149 +8,205 @@ export class QuizBoard extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = this.getDefaultState();
 
-        };
+        this.resetBoard = this.resetBoard.bind(this);
+        this.answerTag = this.answerTag.bind(this);
+        this.handleOpponent = this.handleOpponent.bind(this);
 
-        this.selectAnswer = this.selectAnswer.bind(this);
-     //   this.resetBoard = this.resetBoard.bind(this);
-        //this.handleOpponent = this.handleOpponent.bind(this);
     }
 
-  /*  getDefaultState() {
-
-        //choose at random whether starting or not. X starts first.
-       // const isX = Math.random() >= 0.5;
-
+    getDefaultState() {
         return {
-          //  board: new QuizState(),
-         /*   posToInsert: null,
-            isX: isX,
-           // needHandleOpponent: ! isX,
-            lastInsertedColumn: null
-            */
-  /*      };
+            board: new QuizState,
+            currentQuizIndex: 0
+        };
     }
-
 
     resetBoard() {
         this.setState(this.getDefaultState());
     }
 
-    getBoardState(){
+    getBoardState() {
         return this.state.board;
     }
 
-    setBoardState(board){
+    setBoardState(board) {
         this.setState({board: board})
     }
 
-    */
+    componentDidUpdate(prevProps, prevState) {
+        this.handleOpponent();
+
+    }
+
+    componentDidMount() {
+        this.handleOpponent();
+
+    }
 
 
-  /*  selectAnswer(prefix, answer, correct) {
-
+    answerTag(prefix, answer, correct) {
         let onclick;
 
-        if(correct) {
-            onclick = "alert('Correct!!!');  displayNewQuiz();";
+
+        if (correct) {
+            onclick = () => {
+                this.displayNewQuiz();
+            }
         } else {
-            onclick = "alert('Wrong answer');";
+            onclick = () => {
+                alert('Wrong answer');
+            };
         }
 
-        let html = "<div class='gameBtn' onclick=\""+onclick+"\">" + prefix + answer + "</div>";
+        return (
+            <div className={"quizBtn"}
+                 onClick={onclick}>
+                {prefix + answer}
+            </div>
+        );
+    }
 
-        return html;
+    //If player.
+    wrongAnswer() {
+
+        let compoints = this.state.points - 1;
+
+        this.setState({
+            points: compoints
+        });
+
     }
 
 
-    /*
-        React life-cycle method called after component is re-rendered
-        due to state change
-     */
- /*   componentDidUpdate(prevProps,prevState){
-        if(this.state.needHandleOpponent){
-            this.handleOpponent();
+    displayNewQuiz() {
+        let compoints = this.state.board.selectCorrectAnswer();
+
+        let index = Math.floor(Math.random() * quizzes.length);
+
+        if (index === this.state.currentQuizIndex) {
+            index = (index + 1) % quizzes.length;
         }
+
+
+        this.setState({
+            currentQuizIndex: index, points: compoints
+        });
+
+
     }
 
-    componentDidMount(){
-        if(this.state.needHandleOpponent){
-            this.handleOpponent();
-        }
-    }
-
-    /*
-        Once we do our move, we need to wait for the opponent to do its move.
-        To do that, we need to inform the opponent's object to play the next
-        move.
-        This needs to be done only once per turn.
-        However, if it is the opponent which is starting, we still need to handle
-        this code. And that is the reason why we call it even from the mounting
-        of the component when the current user has not done any action yet.
-     */
- /*   handleOpponent(){
-        this.setState({needHandleOpponent: false});
-
-        this.props.opponent.playNext(this.state.lastInsertedColumn, this);
-    }
+    handleOpponent() {
+        if(this.state.board.points === 10){
+        this.props.opponent.answerCorrect(this.state.points, this);
+    }}
 
 
-
-  /*  getInfoMessage(res) {
+    getInfoMessage(res) {
 
         const board = this.state.board;
-        const won = this.state.isX ? board.result === 1 : board.result === 2;
-        const lost = this.state.isX ? board.result === 2 : board.result === 1;
+        //   const won =  board.points;
+        //const won =  board.result === 1;
+
+        const won = board.result === 1;
+        const lost = board.result === 2;
+       // this.props.opponent.answerCorrect(this.state.points, lost);
+
+        // const won = this.state.isX ?
+        // const lost = board.result === 2;
+        //  const lost = board.result === 2;
 
         let msg;
         if (res === 0) {
-            const label = this.state.board.nextLabelToPlay();
-            if(this.playerIsNext()){
-                msg = "Your turn. Playing " + label;
-            } else {
-                msg = "Opponent's turn. Playing " + label;
-            }
+            msg = "Ongoing Game"
         } else if (won) {
-            msg = "You Won! Well Done!"
-        } else if (lost) {
-            msg = "You Lost!"
-        } else if (res === 3) {
+            msg = "You Got 10 points before your opponent!"
+        } else if(lost){
+            msg = "LOst!"
+        }
+        else if (res === 3) {
             msg = "The Game Ended in a Tie!"
         } else if (res === 4) {
             msg = "The opponent has forfeited. You won the game!"
-        }else {
+        } else {
             throw "Invalid result code: " + res;
         }
 
         return msg;
     }
-    */
 
 
-    render() {
+    renderGameFinish(){
+        const msg = this.getInfoMessage(this.state.board.result);
 
-    //    const msg = this.getInfoMessage(this.state.board.result);
-
-      /*  const handler = this.props.newQuizMatchHandler ? this.props.newQuizMatchHandler : this.resetBoard;
-
-        return (
+        return(
             <div>
-                 <h2>{this.props.title}</h2>
-                   /* <div className="btn" onClick={handler}>New Match</div>@/
-
-
-       /*
-                   <div>
-                       <div className="btn" onClick={handler}>New Match</div>
-                   </div>
+                <h2>{msg}</h2>
             </div>
-        );
-
-
-        */
+        )
     }
 
 
+    renderGameOn() {
+        const quiz = quizzes[this.state.currentQuizIndex];
+        const points = [this.state.board.points];
+
+
+        return (
+
+            <div>
+                <div>
+                    <h2 className={"quizQuestion"}>
+                        Question: {quiz.question}
+                    </h2>
+                </div>
+                <div>
+                    {this.answerTag("A: ", quiz.answer_0, quiz.indexOfRightAnswer === 0)}
+                    {this.answerTag("B: ", quiz.answer_1, quiz.indexOfRightAnswer === 1)}
+                    {this.answerTag("C: ", quiz.answer_2, quiz.indexOfRightAnswer === 2)}
+                    {this.answerTag("D: ", quiz.answer_3, quiz.indexOfRightAnswer === 3)}
+                </div>
+
+                <div>
+                    <h2 className={"quizQuestion"}>
+                        Points: {points}
+                    </h2>
+
+                    <h2>OnGoingGame</h2>
+                </div>
+
+
+            </div>
+        );
+    }
+
+
+    render() {
+        //const handler = this.props.newMatchHandler ? this.props.newMatchHandler : this.resetBoard;
+
+        const board = this.state.board;
+        let content;
+        const on =  board.result;
+        if(on === 0){
+            content = this.renderGameOn();
+        } else {
+            content = this.renderGameFinish()
+        }
+
+
+
+        //  const quiz = quizzes[this.state.currentQuizIndex];
+        //  const points = [this.state.points];
+        return (
+            <div>
+                {content}
+
+            </div>
+
+        );
+
+
+    }
 
 }
