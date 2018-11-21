@@ -27,7 +27,7 @@ class Match{
         this.sockets.set(firstPlayerId, ActivePlayers.getSocket(firstPlayerId));
         this.sockets.set(secondPlayerId, ActivePlayers.getSocket(secondPlayerId));
 
-        //who is starting is selected at random
+
 
 
         //instruct what to do once a match is finished
@@ -75,11 +75,10 @@ class Match{
             }
 
 
-            //this.board.boardStatus(result);
+             this.board.boardStatus(result);
 
             //send such state to the opponent
             this.sendState(this.opponentId(userId));
-            //console.log("test");
 
 
             if(this.board.isGameFinished()){

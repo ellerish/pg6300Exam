@@ -22,6 +22,7 @@ export class QuizGame extends React.Component {
             matchId: null,
             opponentId: null,
             errorMsg: null,
+            points: 0
         };
 
         this.refToQuizBoard = React.createRef();

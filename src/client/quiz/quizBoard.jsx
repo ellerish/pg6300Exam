@@ -35,20 +35,16 @@ export class QuizBoard extends React.Component {
     }
 
 
-    /*componentDidUpdate() {
-        const board = this.state.board;
-        if(board.result !==0){
-            this.handleResultChange();
-        }
+    componentDidUpdate() {
+          this.handleResultChange();
+
     }
 
 
     componentDidMount() {
-        const board = this.state.board;
-        if(board.result !==0){
-        }
+        this.handleResultChange();
 
-    }*/
+    }
 
 
 
@@ -92,8 +88,10 @@ export class QuizBoard extends React.Component {
 
 
     handleResultChange () {
-           // this.state.opponent.setMatchResult()
-    }
+        if(this.state.board.points === 10){
+            this.props.opponent.setMatchResult(this.state.points, this);
+        }}
+    
 
 
     getInfoMessage(res) {
@@ -102,14 +100,14 @@ export class QuizBoard extends React.Component {
 
         const won = board.result === 1;
 
-        const lost = board.result === 2;
+       // const lost = board.result === 2;
 
         let msg;
         if (res === 0) {
             msg = "Ongoing Game"
         } else if (won) {
             msg = "You Got 10 points before your opponent!"
-        } else if(lost){
+        } else if(res === 2){
             msg = "LOOOOST"
         } else if(res === 4) {
             msg = "The opponent has forfeited. You won the game!"
@@ -157,7 +155,7 @@ export class QuizBoard extends React.Component {
                         Points: {points}
                     </h2>
 
-                    <h2>On Going Quiz</h2>
+                    <h2>On Going Game</h2>
                 </div>
             </div>
         );
@@ -165,6 +163,8 @@ export class QuizBoard extends React.Component {
 
 
     render() {
+
+
         const board = this.state.board;
         let content;
         const on =  board.result;

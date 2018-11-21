@@ -52,10 +52,10 @@ class QuizState{
 
     }
 
-    /*
     boardStatus(res){
-        this.result = 2;
-    }*/
+        res = this.result;
+    }
+
 
 
 }

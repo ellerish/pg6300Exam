@@ -8,11 +8,12 @@ export  class Opponent{
         this.matchId = matchId;
     }
 
-    setMatchResult(resultStatus, boardCmp){
+    setMatchResult(pointStatus, boardCmp){
         const boardState = boardCmp.getBoardState();
 
         this.socket.emit('insertion', {
-            resultStatus: boardState.result,
+            pointStatus: boardState.points,
+            //resultStatus: boardState.result,
             matchId: this.matchId
         });
     }
